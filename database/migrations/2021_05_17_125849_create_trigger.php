@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreateTrigger extends Migration
 {
@@ -13,19 +11,44 @@ class CreateTrigger extends Migration
      */
     public function up()
     {
-        $statement = "CREATE TRIGGER Items_INSERT
-                        ON items AFTER INSERT
-                        AS
-                        BEGIN
-                            DECLARE @quantity INT, @id INT, @result INT
-                        
-                            SET @quantity = (select quantity from inserted)
-                            SET @id = (select item_id from inserted)
-                        
-                            exec MakeOrder @quantity, @id, @result output
-                        END";
+        // MS SQL Server code
+        if (DB::connection() instanceof \Illuminate\Database\SqlServerConnection) {
+            $statement = "CREATE TRIGGER Items_INSERT
+                            ON items AFTER INSERT
+                            AS
+                            BEGIN
+                                DECLARE @quantity INT, @id INT, @result INT
+                            
+                                SET @quantity = (select quantity from inserted)
+                                SET @id = (select item_id from inserted)
+                            
+                                exec MakeOrder @quantity, @id, @result output
+                            END";
 
-        DB::statement($statement);
+            DB::statement($statement);
+        }
+
+        // PostgreSQL code
+        if (DB::connection() instanceof \Illuminate\Database\PostgresConnection) {
+            // Create function for trigger
+            $trigger_function_statement = "CREATE OR REPLACE FUNCTION trigger_function()
+                                            RETURNS TRIGGER 
+                                            LANGUAGE PLPGSQL
+                                            AS
+                                            $$
+                                            BEGIN
+                                                call make_order(NEW.quantity, NEW.item_id);
+                                            END;
+                                            $$;";
+            DB::statement($trigger_function_statement);
+
+            // Create trigger
+            $trigger_statement = "CREATE TRIGGER items_insert
+                                    AFTER INSERT
+                                    ON items
+                                    EXECUTE PROCEDURE trigger_function();";
+            DB::statement($trigger_statement);
+        }
     }
 
     /**
@@ -35,7 +58,16 @@ class CreateTrigger extends Migration
      */
     public function down()
     {
-        $statement = "DROP TRIGGER Items_INSERT";
-        DB::statement($statement);
+        // MS SQL Server code
+        if (DB::connection() instanceof \Illuminate\Database\SqlServerConnection) {
+            $statement = "DROP TRIGGER Items_INSERT";
+            DB::statement($statement);
+        }
+
+        // PostgreSQL code
+        if (DB::connection() instanceof \Illuminate\Database\PostgresConnection) {
+            $statement = "DROP TRIGGER items_insert;";
+            DB::statement($statement);
+        }
     }
 }
