@@ -23,7 +23,7 @@ class CreateDevicesTable extends Migration
                 ->onDelete('cascade');
             
             $table->unsignedInteger('total_quantity');
-            $table->unsignedFloat('price');
+            $table->unsignedFloat('price')->index('price');
             $table->unsignedFloat('discount');
             $table->unsignedInteger('ram');
             $table->unsignedInteger('rom');
