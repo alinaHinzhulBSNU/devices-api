@@ -10,14 +10,8 @@ class Order extends Model
     use HasFactory;
 
     public $timestamps = false;
-    
-    protected $fillable = [
-        'city_id',
-        'address',
-        'customer_name',
-        'date',
-        'phone'
-    ];
+	
+    protected $guarded = [];
 
     protected $visible = ['id', 'city', 'address', 'customer_name', 'date', 'phone'];
 

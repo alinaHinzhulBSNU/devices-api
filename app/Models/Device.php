@@ -12,16 +12,7 @@ class Device extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'model_id',
-        'total_quantity',
-        'price',
-        'discount',
-        'ram',
-        'rom',
-        'color',
-        'image'
-    ];
+    protected $guarded = [];
 
     protected $visible = ['id', 'model', 'total_quantity', 'price', 'discount', 'ram', 'rom', 'color', 'image'];
 

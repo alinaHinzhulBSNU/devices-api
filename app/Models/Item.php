@@ -10,13 +10,8 @@ class Item extends Model
     use HasFactory;
 
     public $timestamps = false;
-
-    protected $fillable = [
-        'device_id',
-        'order_id',
-        'quantity',
-        'total_sum'
-    ];
+	
+    protected $guarded = [];
 
     protected $visible = ['item_id', 'device', 'order', 'quantity', 'total_sum'];
 

@@ -12,9 +12,7 @@ class Brand extends Model
 
     public $timestamps = false;
     
-    protected $fillable = [
-        'brand_name'
-    ];
+    protected $guarded = [];
 
     public function models(){
         return $this->hasMany(

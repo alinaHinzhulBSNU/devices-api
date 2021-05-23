@@ -10,13 +10,8 @@ class Model extends ParentModel
     use HasFactory;
 
     public $timestamps = false;
-    
-    protected $fillable = [
-        'model_name',
-        'brand_id',
-        'description',
-        'diagonal'
-    ];
+	
+    protected $guarded = [];
 
     protected $visible = ['id', 'model_name', 'brand', 'description', 'diagonal', 'devices'];
 
