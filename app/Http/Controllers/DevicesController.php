@@ -14,7 +14,7 @@ class DevicesController extends Controller
      */
     public function index()
     {
-        return Device::all();
+        return Device::with('model')->get();
     }
 
     /**
@@ -37,7 +37,7 @@ class DevicesController extends Controller
      */
     public function show($id)
     {
-        return Device::find($id);
+        return Device::with('model')->where('id', $id)->get();
     }
 
     /**
@@ -72,7 +72,7 @@ class DevicesController extends Controller
      */
     public function search($max_price)
     {
-        return Device::where('price', '<=', $max_price)->get();
+        return Device::with('model')->where('price', '<=', $max_price)->get();
     }
 
     /**

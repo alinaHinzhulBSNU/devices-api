@@ -14,7 +14,7 @@ class ModelsController extends Controller
      */
     public function index()
     {
-        return Model::all();
+        return Model::with('brand', 'devices')->get();
     }
 
     /**
@@ -37,7 +37,7 @@ class ModelsController extends Controller
      */
     public function show($id)
     {
-        return Model::find($id);
+        return Model::with('brand', 'devices')->where('id', $id)->get();
     }
 
     /**
@@ -72,7 +72,7 @@ class ModelsController extends Controller
      */
     public function search($model_name)
     {
-        return Model::where('model_name', 'like', '%'.$model_name.'%')->get();
+        return Model::with('brand', 'devices')->where('model_name', 'like', '%'.$model_name.'%')->get();
     }
 
     /**

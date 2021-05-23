@@ -14,7 +14,7 @@ class CitiesController extends Controller
      */
     public function index()
     {
-        return City::all();
+        return City::with('country', 'orders')->get();
     }
 
     /**
@@ -37,7 +37,7 @@ class CitiesController extends Controller
      */
     public function show($id)
     {
-        return City::find($id);
+        return City::with('country', 'orders')->where('id', $id)->get();
     }
 
     /**
@@ -72,7 +72,7 @@ class CitiesController extends Controller
      */
     public function search($city_name)
     {
-        return City::where('city_name', 'like', '%'.$city_name.'%')->get();
+        return City::with('country', 'orders')->where('city_name', 'like', '%'.$city_name.'%')->get();
     }
 
     /**

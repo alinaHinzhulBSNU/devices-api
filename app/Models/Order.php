@@ -18,4 +18,14 @@ class Order extends Model
         'date',
         'phone'
     ];
+
+    protected $visible = ['id', 'city', 'address', 'customer_name', 'date', 'phone'];
+
+    public function city(){
+        return $this->belongsTo(
+            City::class,
+            'city_id',
+            'id'
+        );
+    }
 }

@@ -17,4 +17,22 @@ class Item extends Model
         'quantity',
         'total_sum'
     ];
+
+    protected $visible = ['item_id', 'device', 'order', 'quantity', 'total_sum'];
+
+    public function device(){
+        return $this->belongsTo(
+            Device::class,
+            'device_id',
+            'id'
+        );
+    }
+
+    public function order(){
+        return $this->belongsTo(
+            Order::class,
+            'order_id',
+            'id'
+        );
+    }
 }

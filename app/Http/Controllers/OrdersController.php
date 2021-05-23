@@ -14,7 +14,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return Order::all();
+        return Order::with('city')->get();
     }
 
     /**
@@ -37,7 +37,7 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        return Order::find($id);
+        return Order::with('city')->where('id', $id)->get();
     }
 
     /**

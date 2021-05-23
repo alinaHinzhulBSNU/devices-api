@@ -14,7 +14,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        return Item::all();
+        return Item::with('device', 'order')->get();
     }
 
     /**
@@ -37,7 +37,7 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        return Item::where('item_id', $id)->get();
+        return Item::with('device', 'order')->where('item_id', $id)->get();
     }
 
     /**

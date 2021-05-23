@@ -17,4 +17,22 @@ class Model extends ParentModel
         'description',
         'diagonal'
     ];
+
+    protected $visible = ['id', 'model_name', 'brand', 'description', 'diagonal', 'devices'];
+
+    public function brand(){
+        return $this->belongsTo(
+            Brand::class,
+            'brand_id',
+            'id'
+        );
+    }
+
+    public function devices(){
+        return $this->hasMany(
+            Device::class,
+            'model_id',
+            'id'
+        );
+    }
 }

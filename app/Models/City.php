@@ -15,4 +15,22 @@ class City extends Model
         'city_name',
         'country_id'
     ];
+
+    protected $visible = ['id', 'city_name', 'country', 'orders'];
+
+    public function country(){
+        return $this->belongsTo(
+            Country::class,
+            'country_id',
+            'id'
+        );
+    }
+
+    public function orders(){
+        return $this->hasMany(
+            Order::class,
+            'city_id',
+            'id'
+        );
+    }
 }
