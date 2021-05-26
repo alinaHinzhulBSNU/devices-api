@@ -13,12 +13,20 @@ class Order extends Model
 	
     protected $guarded = [];
 
-    protected $visible = ['id', 'city', 'address', 'customer_name', 'date', 'phone'];
+    protected $visible = ['id', 'city', 'address', 'customer_name', 'date', 'phone', 'items'];
 
     public function city(){
         return $this->belongsTo(
             City::class,
             'city_id',
+            'id'
+        );
+    }
+
+    public function items(){
+        return $this->hasMany(
+            Item::class,
+            'order_id',
             'id'
         );
     }
