@@ -37,7 +37,7 @@ class CreateTrigger extends Migration
                                             AS
                                             $$
                                             BEGIN
-                                                call make_order(NEW.quantity, NEW.id);
+                                                call make_order(quantity::NEW.quantity, i_id::NEW.id);
                                             END;
                                             $$;";
             DB::statement($trigger_function_statement);
