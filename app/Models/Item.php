@@ -13,8 +13,7 @@ class Item extends Model
 	
     protected $guarded = [];
 
-    //protected $visible = ['item_id', 'device', 'order', 'quantity', 'total_sum'];
-    protected $visible = ['id', 'device', 'order', 'quantity', 'total_sum'];
+    protected $visible = ['item_id', 'device', 'order', 'quantity', 'total_sum'];
 
     public function device(){
         return $this->belongsTo(
