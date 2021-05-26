@@ -37,7 +37,8 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        return Item::with('device', 'order')->where('item_id', $id)->get();
+        // return Item::with('device', 'order')->where('item_id', $id)->get();
+        return Item::with('device', 'order')->where('id', $id)->get();
     }
 
     /**
@@ -61,7 +62,7 @@ class ItemsController extends Controller
     public function destroy($id)
     {
         //DELETE INFORMATION ABOUT ORDER WHEN IT IS DELIVERED
-        return Item::where('item_id', $id)->delete();
+        return Item::where('id', $id)->delete();
     }
 
     /**

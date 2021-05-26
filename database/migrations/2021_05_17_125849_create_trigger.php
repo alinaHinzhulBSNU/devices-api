@@ -20,7 +20,7 @@ class CreateTrigger extends Migration
                                 DECLARE @quantity INT, @id INT, @result INT
                             
                                 SET @quantity = (select quantity from inserted)
-                                SET @id = (select item_id from inserted)
+                                SET @id = (select id from inserted)
                             
                                 exec MakeOrder @quantity, @id, @result output
                             END";
@@ -37,7 +37,7 @@ class CreateTrigger extends Migration
                                             AS
                                             $$
                                             BEGIN
-                                                call make_order(NEW.quantity, NEW.item_id);
+                                                call make_order(NEW.quantity, NEW.id);
                                             END;
                                             $$;";
             DB::statement($trigger_function_statement);

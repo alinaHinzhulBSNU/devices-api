@@ -17,8 +17,8 @@ class CreateProcedure extends Migration
                             AS
                             DECLARE @device_id INT, @order_id INT, @total_quantity INT, @new_quantity INT, @sum FLOAT
                             BEGIN
-                                SET @device_id = (SELECT d.id FROM items i inner join devices d on i.device_id = d.id WHERE i.item_id = @item_id)
-                                SET @order_id = (SELECT order_id FROM items WHERE item_id = @item_id)
+                                SET @device_id = (SELECT d.id FROM items i inner join devices d on i.device_id = d.id WHERE i.id = @item_id)
+                                SET @order_id = (SELECT order_id FROM items WHERE id = @item_id)
                                 SET @total_quantity = (SELECT total_quantity FROM devices WHERE id = @device_id)
                                 
                                 IF @quantity <= @total_quantity
@@ -26,7 +26,7 @@ class CreateProcedure extends Migration
                                     BEGIN TRANSACTION
                                         SET @sum = dbo.getSum(@quantity, @device_id)
                                         SET @new_quantity = @total_quantity - @quantity
-                                        UPDATE items SET total_sum = @sum WHERE item_id = @item_id
+                                        UPDATE items SET total_sum = @sum WHERE id = @item_id
                                         UPDATE devices SET total_quantity = @new_quantity WHERE id = @device_id
                                         SET @result = 1
                                     COMMIT TRANSACTION
@@ -55,15 +55,15 @@ class CreateProcedure extends Migration
                                 new_quantity int;
                                 sum real;
                             begin
-                                device_id := (SELECT d.id FROM items i inner join devices d on i.device_id = d.id WHERE i.item_id = i_id);
-                                order_id := (SELECT order_id FROM items WHERE item_id = i_id);
+                                device_id := (SELECT d.id FROM items i inner join devices d on i.device_id = d.id WHERE i.id = i_id);
+                                order_id := (SELECT order_id FROM items WHERE id = i_id);
                                 total_quantity := (SELECT total_quantity FROM devices WHERE id = device_id);
                             
                                 IF quantity <= total_quantity
                                 THEN
                                     sum := get_sum(quantity, device_id);
                                     new_quantity := total_quantity - quantity;
-                                    UPDATE items SET total_sum = sum WHERE item_id = i_id;
+                                    UPDATE items SET total_sum = sum WHERE id = i_id;
                                     UPDATE devices SET total_quantity = new_quantity WHERE id = device_id;
                                 ELSE
                                     DELETE FROM orders WHERE id = order_id;

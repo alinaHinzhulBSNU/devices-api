@@ -14,7 +14,8 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id('item_id');
+            //$table->id('item_id');
+            $table->id();
 
             $table->unsignedBigInteger('device_id');
             $table->foreign('device_id')
