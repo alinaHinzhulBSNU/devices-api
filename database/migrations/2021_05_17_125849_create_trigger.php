@@ -37,7 +37,7 @@ class CreateTrigger extends Migration
                                             AS
                                             $$
                                             BEGIN
-                                                call make_order(NEW.quantity, NEW.id);
+                                                call make_order(NEW.quantity, NEW.item_id);
                                             END;
                                             $$;";
             DB::statement($trigger_function_statement);
@@ -66,8 +66,7 @@ class CreateTrigger extends Migration
 
         // PostgreSQL code
         if (DB::connection() instanceof \Illuminate\Database\PostgresConnection) {
-            $statement = "DROP TRIGGER items_insert";
-            DB::statement($statement);
+            $statement = "DROP TRIGGER items_insert;";
         }
     }
 }
