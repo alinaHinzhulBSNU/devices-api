@@ -66,7 +66,7 @@ class CreateTrigger extends Migration
 
         // PostgreSQL code
         if (DB::connection() instanceof \Illuminate\Database\PostgresConnection) {
-            $statement = "DROP TRIGGER items_insert;";
+            $statement = "DROP TRIGGER items_insert";
             DB::statement($statement);
         }
     }
